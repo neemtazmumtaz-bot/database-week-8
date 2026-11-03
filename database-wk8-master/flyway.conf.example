@@ -1,0 +1,5 @@
+flyway.url=jdbc:postgresql://localhost:5432/capstone
+flyway.user=capstone_admin
+flyway.password=local_dev_only_change_me
+flyway.locations=filesystem:migrations
+flyway.validateMigrationNaming=true

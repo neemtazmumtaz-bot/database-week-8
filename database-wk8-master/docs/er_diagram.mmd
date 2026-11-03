@@ -1,0 +1,53 @@
+erDiagram
+    APP_USERS ||--o{ BUDGETS : owns
+    APP_USERS ||--o{ CATEGORIES : creates
+    APP_USERS ||--o{ TRANSACTIONS : records
+    BUDGETS ||--o{ TRANSACTIONS : groups
+    CATEGORIES o|--o{ TRANSACTIONS : classifies
+    APP_USERS ||--o{ AUDIT_LOG : performs
+
+    APP_USERS {
+        uuid id PK
+        varchar email UK
+        varchar display_name
+        timestamptz created_at
+    }
+    BUDGETS {
+        uuid id PK
+        uuid user_id FK
+        varchar name
+        numeric monthly_limit
+        char currency
+        date starts_on
+        date ends_on
+        timestamptz created_at
+    }
+    CATEGORIES {
+        uuid id PK
+        uuid user_id FK
+        varchar name
+        varchar kind
+        timestamptz created_at
+    }
+    TRANSACTIONS {
+        uuid id PK
+        uuid user_id FK
+        uuid budget_id FK
+        uuid category_id FK
+        varchar kind
+        numeric amount
+        varchar description
+        date occurred_on
+        timestamptz created_at
+        timestamptz updated_at
+    }
+    AUDIT_LOG {
+        bigint id PK
+        uuid actor_user_id FK
+        varchar table_name
+        varchar operation
+        uuid row_id
+        jsonb old_data
+        jsonb new_data
+        timestamptz changed_at
+    }
